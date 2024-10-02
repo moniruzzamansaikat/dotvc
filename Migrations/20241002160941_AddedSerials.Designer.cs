@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YourProjectName.Data;
 
@@ -11,9 +12,11 @@ using YourProjectName.Data;
 namespace YourProjectName.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241002160941_AddedSerials")]
+    partial class AddedSerials
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,34 +25,6 @@ namespace YourProjectName.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("YourProjectName.Models.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Description 1",
-                            Name = "Category 1"
-                        });
-                });
-
             modelBuilder.Entity("YourProjectName.Models.Item", b =>
                 {
                     b.Property<int>("Id")
@@ -57,9 +32,6 @@ namespace YourProjectName.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -82,15 +54,12 @@ namespace YourProjectName.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
                     b.ToTable("Items");
 
                     b.HasData(
                         new
                         {
                             Id = 12,
-                            CategoryId = 1,
                             Description = "Description 1",
                             Name = "Item 1",
                             Price = 100m,
@@ -130,15 +99,6 @@ namespace YourProjectName.Migrations
                         });
                 });
 
-            modelBuilder.Entity("YourProjectName.Models.Item", b =>
-                {
-                    b.HasOne("YourProjectName.Models.Category", "Category")
-                        .WithMany("Items")
-                        .HasForeignKey("CategoryId");
-
-                    b.Navigation("Category");
-                });
-
             modelBuilder.Entity("YourProjectName.Models.SerialNumber", b =>
                 {
                     b.HasOne("YourProjectName.Models.Item", "Item")
@@ -146,11 +106,6 @@ namespace YourProjectName.Migrations
                         .HasForeignKey("YourProjectName.Models.SerialNumber", "ItemId");
 
                     b.Navigation("Item");
-                });
-
-            modelBuilder.Entity("YourProjectName.Models.Category", b =>
-                {
-                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("YourProjectName.Models.Item", b =>

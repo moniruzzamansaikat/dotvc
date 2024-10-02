@@ -11,6 +11,8 @@
         <th>Name</th>
         <th>Price</th>
         <th>Description</th>
+        <th>Category</th>
+        <th>Serial Number</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -21,6 +23,8 @@
           <td>@item.Name</td>
           <td>@item.Price</td>
           <td>@(item.Description ?? "N/A")</td>
+          <td>@item.Category?.Name</td>
+          <td>@item.SerialNumber?.Number</td>
           <td>
             <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
               <form method="post" asp-action="Delete" asp-route-id="@item.Id" class="d-inline">
