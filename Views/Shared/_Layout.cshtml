@@ -13,6 +13,8 @@
         @Html.Partial("_Navbar.cshtml")
     </header>
     <div class="container">
+        @Html.Partial("_Alerts.cshtml", ViewData.ModelState)
+
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
